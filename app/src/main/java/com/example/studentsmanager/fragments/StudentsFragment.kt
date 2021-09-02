@@ -30,7 +30,7 @@ class StudentsFragment : Fragment() {
                 adapter.submitList(it)
             }
         })
-
+        binding.viewModel = viewModel
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 

@@ -1,40 +1,44 @@
 package com.example.studentsmanager.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.studentsmanager.Student
 import com.example.studentsmanager.network.StudentApi
 import kotlinx.coroutines.launch
 
+/**
+Class biểu thị trạng thái lấy dữ liệu từ network
+*/
+enum class StudentApiStatus {
+    LOADING,
+    ERROR,
+    DONE
+}
+
 class StudentViewModel : ViewModel() {
     private var _arrayStudent = MutableLiveData<List<Student>>()
-    val arrayStudent
-        get() = _arrayStudent
+    val arrayStudent: LiveData<List<Student>> = _arrayStudent
 
-    private var _status = MutableLiveData<String>()
-    val status
-        get() = _status
+    private var _status = MutableLiveData<StudentApiStatus>()
+    val status: LiveData<StudentApiStatus> = _status
 
     // Using coroutine get list student from network
-    private fun getStudents() {
+    private fun fetchStudentsFromNetwork() {
         viewModelScope.launch {
+            _status.value = StudentApiStatus.LOADING
             try {
                 _arrayStudent.value = StudentApi.retrofit.getStudents()
-                Log.d("ToanNTe", "getStudents: ${_arrayStudent.value?.size}")
-                _status.value = "success"
+                _status.value = StudentApiStatus.DONE
             } catch (e: Exception) {
+                _status.value = StudentApiStatus.ERROR
                 _arrayStudent.value = listOf()
-                Log.d("ToanNTe", "getStudents: $e")
-                _status.value = "error"
             }
+            Log.d("ToanNTe", "fetchStudentsFromNetwork: ${status.value}")
         }
     }
 
     init {
-        getStudents()
+        fetchStudentsFromNetwork()
     }
 }
 
