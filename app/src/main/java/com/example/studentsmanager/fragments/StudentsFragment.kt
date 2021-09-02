@@ -1,16 +1,19 @@
 package com.example.studentsmanager.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.studentsmanager.R
 import com.example.studentsmanager.StudentAdapter
 import com.example.studentsmanager.databinding.StudentsFragmentBinding
 import com.example.studentsmanager.viewmodel.StudentViewModel
 import com.example.studentsmanager.viewmodel.StudentViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
 class StudentsFragment : Fragment() {
     private lateinit var viewModel: StudentViewModel
@@ -32,6 +35,17 @@ class StudentsFragment : Fragment() {
                 adapter.submitList(it)
             }
         })
+
+        viewModel.isInternetConnected.observe(viewLifecycleOwner, Observer {
+            if (viewModel.isInternetConnected.value == false) {
+                Snackbar.make(
+                    binding.root,
+                    context?.getString(R.string.toast_internet_disconnected).toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        })
+
         binding.viewModel = viewModel
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this

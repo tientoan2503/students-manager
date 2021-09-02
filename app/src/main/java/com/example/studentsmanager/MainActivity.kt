@@ -8,18 +8,20 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.studentsmanager.viewmodel.StudentViewModel
 import com.example.studentsmanager.viewmodel.StudentViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
 /**
- * Create by Tiến Toàn - 02/09/2021
+ * App create by Tiến Toàn - 01/09/2021
  * Xây dựng API by Khánh Junior
  *
  * Kiểm tra giữa kì môn Phát triển phần mềm hướng dịch vụ
  *
- * Sử dụng Retrofit - LiveData - Share ViewModel - Navigation Component - DataBinding
+ * Sử dụng Retrofit - LiveData - Share ViewModel - Navigation Component - DataBinding - Room
  * */
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +33,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val mainLayout: View = findViewById(R.id.nav_host_fragment)
+        if (!isInternetConnected(applicationContext)) {
+            Snackbar.make(
+                mainLayout,
+                getString(R.string.toast_internet_disconnected).toString(),
+                Snackbar.LENGTH_SHORT
+            )
+        }
 
         val viewModelFactory = StudentViewModelFactory()
         viewModel = ViewModelProvider(this, viewModelFactory).get(StudentViewModel::class.java)
@@ -45,8 +55,9 @@ class MainActivity : AppCompatActivity() {
                     ConnectivityManager.CONNECTIVITY_ACTION -> {
                         if (isInternetConnected(context)) {
                             viewModel.fetchStudentsFromNetwork()
+                            viewModel.isInternetConnected.value = true
                         } else {
-
+                            viewModel.isInternetConnected.value = false
                         }
                     }
                 }

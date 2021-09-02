@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Students Manager</string>
+    <string name="toast_internet_disconnected">Internet disconnected</string>
 </resources>

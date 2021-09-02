@@ -1,6 +1,5 @@
 package com.example.studentsmanager.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.studentsmanager.Student
 import com.example.studentsmanager.network.StudentApi
@@ -8,7 +7,7 @@ import kotlinx.coroutines.launch
 
 /**
 Class biểu thị trạng thái lấy dữ liệu từ network
-*/
+ */
 enum class StudentApiStatus {
     LOADING,
     ERROR,
@@ -22,8 +21,8 @@ class StudentViewModel : ViewModel() {
     private var _status = MutableLiveData<StudentApiStatus>()
     val status: LiveData<StudentApiStatus> = _status
 
-    private var _isFirstOpen = MutableLiveData<Boolean>()
-    val isFirstOpen = _isFirstOpen
+    private var _isInternetConnected = MutableLiveData<Boolean>()
+    val isInternetConnected = _isInternetConnected
 
     // Using coroutine get list student from network
     fun fetchStudentsFromNetwork() {
@@ -41,7 +40,6 @@ class StudentViewModel : ViewModel() {
 
     init {
         fetchStudentsFromNetwork()
-        _isFirstOpen.value = true
     }
 }
 
