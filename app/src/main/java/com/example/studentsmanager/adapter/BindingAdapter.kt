@@ -1,6 +1,5 @@
 package com.example.studentsmanager.adapter
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -9,7 +8,6 @@ import com.example.studentsmanager.viewmodel.StudentApiStatus
 
 @BindingAdapter("fetchDataStatus")
 fun ImageView.bindingStatus(status: StudentApiStatus?) {
-    Log.d("ToanNTe", "bindingStatus: $status")
     when (status) {
         StudentApiStatus.LOADING -> {
             visibility = View.VISIBLE

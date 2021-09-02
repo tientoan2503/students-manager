@@ -13,6 +13,8 @@ import com.example.studentsmanager.viewmodel.StudentViewModel
 import com.example.studentsmanager.viewmodel.StudentViewModelFactory
 
 class StudentsFragment : Fragment() {
+    private lateinit var viewModel: StudentViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -20,10 +22,10 @@ class StudentsFragment : Fragment() {
     ): View? {
         val binding = StudentsFragmentBinding.inflate(inflater, container, false)
         val viewModelFactory = StudentViewModelFactory()
-        val viewModel = ViewModelProvider(this, viewModelFactory)
+        viewModel = ViewModelProvider(requireActivity(), viewModelFactory)
             .get(StudentViewModel::class.java)
-        val adapter = StudentAdapter()
 
+        val adapter = StudentAdapter()
         binding.recyclerviewStudents.adapter = adapter
         viewModel.arrayStudent.observe(viewLifecycleOwner, Observer {
             it?.let {

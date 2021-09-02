@@ -22,8 +22,11 @@ class StudentViewModel : ViewModel() {
     private var _status = MutableLiveData<StudentApiStatus>()
     val status: LiveData<StudentApiStatus> = _status
 
+    private var _isFirstOpen = MutableLiveData<Boolean>()
+    val isFirstOpen = _isFirstOpen
+
     // Using coroutine get list student from network
-    private fun fetchStudentsFromNetwork() {
+    fun fetchStudentsFromNetwork() {
         viewModelScope.launch {
             _status.value = StudentApiStatus.LOADING
             try {
@@ -33,12 +36,12 @@ class StudentViewModel : ViewModel() {
                 _status.value = StudentApiStatus.ERROR
                 _arrayStudent.value = listOf()
             }
-            Log.d("ToanNTe", "fetchStudentsFromNetwork: ${status.value}")
         }
     }
 
     init {
         fetchStudentsFromNetwork()
+        _isFirstOpen.value = true
     }
 }
 
