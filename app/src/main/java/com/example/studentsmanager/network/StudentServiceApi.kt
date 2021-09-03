@@ -9,8 +9,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
-private const val BASE_URL = "http://192.168.0.104:8000"
+private const val BASE_URL = "http://192.168.0.104:8000/api/"
 
 val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
@@ -23,11 +24,14 @@ private val retrofitBuilder = Retrofit.Builder()
     .build()
 
 interface StudentServiceApi {
-    @GET("/api/students")
+    @GET("students")
     suspend fun getStudents(): List<Student>
 
-    @POST("api/students")
+    @POST("students")
     suspend fun createStudent(@Body student: Student): Response<Student>
+
+    @GET("students")
+    suspend fun searchStudent(@Query("nameLike") name: String): List<Student>
 }
 
 object StudentApi {

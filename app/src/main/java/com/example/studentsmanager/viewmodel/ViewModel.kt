@@ -41,7 +41,7 @@ class StudentViewModel : ViewModel() {
         }
     }
 
-    fun createStudent(context: Context, student: Student) {
+    fun addStudent(context: Context, student: Student) {
         viewModelScope.launch {
             try {
                 val response = StudentApi.retrofit.createStudent(student)
@@ -50,6 +50,20 @@ class StudentViewModel : ViewModel() {
                 Log.d("ToanNTe", "createStudent: ${response.message()}")
             } catch (e: Exception) {
                 Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
+                Log.d("ToanNTe", "addStudent: $e")
+            }
+        }
+    }
+
+    fun searchStudent(name: String) {
+        viewModelScope.launch {
+            _status.value = StudentApiStatus.LOADING
+            try {
+                _arrayStudent.value = StudentApi.retrofit.searchStudent(name)
+                _status.value = StudentApiStatus.DONE
+            } catch (e: Exception) {
+                _arrayStudent.value = listOf()
+                _status.value = StudentApiStatus.ERROR
             }
         }
     }

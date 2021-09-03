@@ -39,6 +39,7 @@ class AddStudentFragment : Fragment() {
 
     // Click button huy
     fun cancel() {
+        viewModel.fetchStudentsFromNetwork()
         navController.navigate(R.id.action_addStudentFragment_to_studentsFragment)
     }
 
@@ -56,7 +57,7 @@ class AddStudentFragment : Fragment() {
         if (isFilled) {
             val student = Student(id, name, phone, email)
             if (viewModel.isInternetConnected.value == true) {
-                viewModel.createStudent(requireContext(), student)
+                viewModel.addStudent(requireContext(), student)
                 // Them xong back ve
                 cancel()
             } else {

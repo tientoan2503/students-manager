@@ -1,10 +1,8 @@
 package com.example.studentsmanager.fragments
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -57,6 +55,28 @@ class StudentsFragment : Fragment() {
             navController.navigate(R.id.action_studentsFragment_to_addStudentFragment)
         }
 
+        setHasOptionsMenu(true)
         return binding.root
+    }
+
+    // Thêm menu search
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.search_menu, menu)
+        val searchMenuItem = menu.findItem(R.id.action_search)
+        val searchView = searchMenuItem.actionView as SearchView
+
+        searchView.queryHint = "Nhập tên sinh viên"
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                viewModel.searchStudent(query!!)
+                return false
+            }
+
+        })
+        super.onCreateOptionsMenu(menu, inflater)
     }
 }
