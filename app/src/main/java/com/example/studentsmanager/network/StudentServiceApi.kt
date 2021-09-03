@@ -3,9 +3,12 @@ package com.example.studentsmanager.network
 import com.example.studentsmanager.Student
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 
 private const val BASE_URL = "http://192.168.0.104:8000"
 
@@ -22,6 +25,9 @@ private val retrofitBuilder = Retrofit.Builder()
 interface StudentServiceApi {
     @GET("/api/students")
     suspend fun getStudents(): List<Student>
+
+    @POST("api/students")
+    suspend fun createStudent(@Body student: Student): Response<Student>
 }
 
 object StudentApi {

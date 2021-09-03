@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.studentsmanager.R
 import com.example.studentsmanager.StudentAdapter
 import com.example.studentsmanager.databinding.StudentsFragmentBinding
@@ -49,6 +50,12 @@ class StudentsFragment : Fragment() {
         binding.viewModel = viewModel
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
+
+        val navController = findNavController()
+
+        binding.fabAddStudent.setOnClickListener {
+            navController.navigate(R.id.action_studentsFragment_to_addStudentFragment)
+        }
 
         return binding.root
     }

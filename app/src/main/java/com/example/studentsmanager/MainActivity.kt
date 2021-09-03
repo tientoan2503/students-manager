@@ -11,6 +11,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.studentsmanager.viewmodel.StudentViewModel
 import com.example.studentsmanager.viewmodel.StudentViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -30,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: StudentViewModel
 
+    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -44,6 +48,14 @@ class MainActivity : AppCompatActivity() {
 
         val viewModelFactory = StudentViewModelFactory()
         viewModel = ViewModelProvider(this, viewModelFactory).get(StudentViewModel::class.java)
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+        setupActionBarWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
     override fun onStart() {

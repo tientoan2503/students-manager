@@ -7,5 +7,17 @@
     <fragment
         android:id="@+id/studentsFragment"
         android:name="com.example.studentsmanager.fragments.StudentsFragment"
-        android:label="StudentsFragment" />
+        android:label="StudentsFragment" >
+        <action
+            android:id="@+id/action_studentsFragment_to_addStudentFragment"
+            app:destination="@id/addStudentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addStudentFragment"
+        android:name="com.example.studentsmanager.fragments.AddStudentFragment"
+        android:label="AddStudentFragment" >
+        <action
+            android:id="@+id/action_addStudentFragment_to_studentsFragment"
+            app:destination="@id/studentsFragment" />
+    </fragment>
 </navigation>

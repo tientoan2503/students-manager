@@ -1,5 +1,6 @@
 package com.example.studentsmanager.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.studentsmanager.Student
 import com.example.studentsmanager.network.StudentApi
@@ -34,6 +35,19 @@ class StudentViewModel : ViewModel() {
             } catch (e: Exception) {
                 _status.value = StudentApiStatus.ERROR
                 _arrayStudent.value = listOf()
+            }
+        }
+    }
+
+    fun createStudent(student: Student) {
+        viewModelScope.launch {
+            try {
+                val response = StudentApi.retrofit.createStudent(student)
+                Log.d("ToanNTe", "createStudent: ${response.body()}")
+                Log.d("ToanNTe", "createStudent: ${response.code()}")
+                Log.d("ToanNTe", "createStudent: ${response.message()}")
+            } catch (e: Exception) {
+                Log.d("ToanNTe", "createStudent: $e")
             }
         }
     }
