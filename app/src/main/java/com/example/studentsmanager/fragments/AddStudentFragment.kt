@@ -13,6 +13,7 @@ import com.example.studentsmanager.Student
 import com.example.studentsmanager.databinding.AddStudentFragmentBinding
 import com.example.studentsmanager.viewmodel.StudentViewModel
 import com.example.studentsmanager.viewmodel.StudentViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
 class AddStudentFragment : Fragment() {
@@ -54,9 +55,18 @@ class AddStudentFragment : Fragment() {
         isFilled = isTextFieldFilled(binding.edtEmailField, email != "")
         if (isFilled) {
             val student = Student(id, name, phone, email)
-            viewModel.createStudent(student)
-            // Them xong back ve
-            cancel()
+            if (viewModel.isInternetConnected.value == true) {
+                viewModel.createStudent(requireContext(), student)
+                // Them xong back ve
+                cancel()
+            } else {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.toast_internet_disconnected),
+                    Snackbar.LENGTH_SHORT
+                )
+                    .show()
+            }
         }
     }
 

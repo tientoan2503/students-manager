@@ -1,6 +1,8 @@
 package com.example.studentsmanager.viewmodel
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.studentsmanager.Student
 import com.example.studentsmanager.network.StudentApi
@@ -39,7 +41,7 @@ class StudentViewModel : ViewModel() {
         }
     }
 
-    fun createStudent(student: Student) {
+    fun createStudent(context: Context, student: Student) {
         viewModelScope.launch {
             try {
                 val response = StudentApi.retrofit.createStudent(student)
@@ -47,7 +49,7 @@ class StudentViewModel : ViewModel() {
                 Log.d("ToanNTe", "createStudent: ${response.code()}")
                 Log.d("ToanNTe", "createStudent: ${response.message()}")
             } catch (e: Exception) {
-                Log.d("ToanNTe", "createStudent: $e")
+                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
             }
         }
     }
