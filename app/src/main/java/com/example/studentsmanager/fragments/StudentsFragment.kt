@@ -65,7 +65,7 @@ class StudentsFragment : Fragment() {
         val searchMenuItem = menu.findItem(R.id.action_search)
         val searchView = searchMenuItem.actionView as SearchView
 
-        searchView.queryHint = "Nhập tên sinh viên"
+        searchView.queryHint = getString(R.string.enter_name_student)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false

@@ -11,6 +11,10 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
+/**
+ *  Tạo interface API, Json Converter Moshi, Retrofit
+ * */
+
 private const val BASE_URL = "http://192.168.0.104:8000/api/"
 
 val moshi = Moshi.Builder()

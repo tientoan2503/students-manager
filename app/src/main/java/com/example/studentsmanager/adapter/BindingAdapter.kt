@@ -6,6 +6,9 @@ import androidx.databinding.BindingAdapter
 import com.example.studentsmanager.R
 import com.example.studentsmanager.viewmodel.StudentApiStatus
 
+/**
+ * Bind image khi lấy dữ liệu trên server
+ * */
 @BindingAdapter("fetchDataStatus")
 fun ImageView.bindingStatus(status: StudentApiStatus?) {
     when (status) {

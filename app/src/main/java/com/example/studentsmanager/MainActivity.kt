@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         if (!isInternetConnected(applicationContext)) {
             Snackbar.make(
                 mainLayout,
-                getString(R.string.toast_internet_disconnected).toString(),
+                getString(R.string.toast_internet_disconnected),
                 Snackbar.LENGTH_SHORT
             )
         }
